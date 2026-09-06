@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img" aria-label="Photo placeholder">
+  <defs>
+    <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e7dccb"/>
+      <stop offset="0.55" stop-color="#dec9a8"/>
+      <stop offset="1" stop-color="#c9b596"/>
+    </linearGradient>
+    <radialGradient id="pr" cx="0.5" cy="0.42" r="0.75">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1500" fill="url(#pg)"/>
+  <rect width="1200" height="1500" fill="url(#pr)"/>
+  <rect x="18" y="18" width="1164" height="1464" fill="none" stroke="#B08D57" stroke-opacity="0.55" stroke-width="1.25"/>
+  <text x="600" y="742" fill="#F7F3EC" fill-opacity="0.92" font-family="Georgia, 'Times New Roman', serif" font-size="192" letter-spacing="4" text-anchor="middle">H &amp; J</text>
+  <text x="600" y="1466" fill="#F7F3EC" fill-opacity="0.7" font-family="Arial, sans-serif" font-size="13" letter-spacing="3" text-anchor="middle">REPLACE WITH YOUR PHOTO</text>
+</svg>
