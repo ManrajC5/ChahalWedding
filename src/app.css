@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--select-bg: theme('colors.wine');
+	}
+
+	html {
+		scroll-behavior: smooth;
+		-webkit-text-size-adjust: 100%;
+	}
+
+	/* One solid white ground for the whole site. Every section inherits it —
+	   colour comes from borders, rules, frames and type, never from fills. */
+	body {
+		@apply bg-white text-charcoal font-sans antialiased;
+		font-feature-settings: 'kern' 1, 'liga' 1;
+	}
+
+	/* Editorial serif rhythm for headings */
+	h1,
+	h2,
+	h3 {
+		@apply font-serif;
+		text-wrap: balance;
+	}
+
+	::selection {
+		background: var(--select-bg);
+		color: theme('colors.warmwhite');
+	}
+
+	/* Consistent, visible keyboard focus */
+	:focus-visible {
+		outline: 2px solid theme('colors.gold');
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	/* Offset anchored sections so the fixed navbar never covers headings */
+	:target {
+		scroll-margin-top: 6rem;
+	}
+}
+
+@layer components {
+	/* Small uppercase editorial label */
+	.eyebrow {
+		@apply font-sans text-xs uppercase tracking-label text-gold;
+	}
+
+	/* Burgundy is the primary call to action — the one filled shape on the page. */
+	.btn-wine {
+		@apply inline-flex items-center justify-center gap-2 rounded-full bg-wine px-8 py-4
+			font-sans text-xs uppercase tracking-wide2 text-white
+			transition-all duration-500 ease-lux hover:bg-burgundy
+			focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60;
+	}
+
+	/* Outline buttons: the border carries the accent, the ground stays white. */
+	.btn-outline-forest {
+		@apply inline-flex items-center justify-center gap-2 rounded-full border border-forest/40 px-8 py-4
+			font-sans text-xs uppercase tracking-wide2 text-forest
+			transition-all duration-500 ease-lux hover:border-forest hover:bg-forest hover:text-white;
+	}
+
+	.btn-outline-wine {
+		@apply inline-flex items-center justify-center gap-2 rounded-full border border-wine/40 px-8 py-4
+			font-sans text-xs uppercase tracking-wide2 text-wine
+			transition-all duration-500 ease-lux hover:border-wine hover:bg-wine hover:text-white;
+	}
+
+	.btn-outline-gold {
+		@apply inline-flex items-center justify-center gap-2 rounded-full border border-gold/50 px-8 py-4
+			font-sans text-xs uppercase tracking-wide2 text-gold
+			transition-all duration-500 ease-lux hover:border-gold hover:bg-gold hover:text-white;
+	}
+
+	/* Thin rules used as heading accents, one per accent colour */
+	.rule-gold {
+		@apply block h-px w-16 bg-gold/70;
+	}
+
+	.rule-forest {
+		@apply block h-px w-16 bg-forest/50;
+	}
+
+	.rule-wine {
+		@apply block h-px w-16 bg-wine/50;
+	}
+
+	/* Hairline card frame: an outer accent line plus an inset second line.
+	   On a single white ground these frames are what give the page structure,
+	   so they are written as real CSS rather than arbitrary utilities. */
+	.frame-gold,
+	.frame-forest,
+	.frame-wine {
+		box-shadow:
+			inset 0 0 0 5px theme('colors.white'),
+			inset 0 0 0 6px var(--frame-inner);
+	}
+
+	.frame-gold {
+		--frame-inner: theme('colors.gold / 22%');
+		border: 1px solid theme('colors.gold / 35%');
+	}
+
+	.frame-forest {
+		--frame-inner: theme('colors.forest / 18%');
+		border: 1px solid theme('colors.forest / 30%');
+	}
+
+	.frame-wine {
+		--frame-inner: theme('colors.wine / 18%');
+		border: 1px solid theme('colors.wine / 30%');
+	}
+}
+
+/* Scroll-reveal: hidden until observed, then animates in.
+   The [data-reveal] element gets `is-visible` from the reveal action. */
+[data-reveal] {
+	opacity: 0;
+	transform: translateY(28px);
+	transition:
+		opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+		transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+	transition-delay: var(--reveal-delay, 0ms);
+	will-change: opacity, transform;
+}
+
+[data-reveal].is-visible {
+	opacity: 1;
+	transform: none;
+}
+
+/* Honor reduced-motion: drop all non-essential motion, keep content visible. */
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+
+	[data-reveal] {
+		opacity: 1;
+		transform: none;
+	}
+}
