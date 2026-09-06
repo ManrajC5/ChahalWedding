@@ -98,31 +98,44 @@ instead, paste a form-service URL (Formspree, Getform, Basin, a Google Form's
 ## Deploying to GitHub Pages
 
 The site is fully prerendered by `@sveltejs/adapter-static` into `/build`, and
-`.github/workflows/deploy.yml` builds and publishes that on every push to
-`main`.
+the `gh-pages` package publishes that folder to the `gh-pages` branch.
+
+**To publish:**
+
+```bash
+npm run deploy
+```
+
+`predeploy` runs the build for you first, so that one command is the whole
+deploy. Pushing to `main` does *not* republish the site — it only updates the
+source. Run `npm run deploy` whenever you want the live site to catch up.
 
 **One-time setup in the repo:** Settings → Pages → *Build and deployment* →
-Source = **GitHub Actions**. With the older "Deploy from a branch" setting,
-Pages serves the repository as-is — and since there is no `index.html` at the
-root, it renders this README instead of the site.
+Source = **Deploy from a branch**, Branch = **`gh-pages`** / **`/ (root)`**.
+Pointing it at `main` instead is what made Pages render this README: there is no
+`index.html` at the repo root, so it falls back to the readme.
 
-Three things make the static build work, and all three matter:
+Four things make the static build work, and all four matter:
 
 | Piece | Where | Why |
 | ----- | ----- | --- |
 | `adapter-static` + `fallback: '404.html'` | `vite.config.js` | Pages only serves files; there is no Node server. The fallback also catches deep links. |
-| `paths.base` from `$BASE_PATH` | `vite.config.js` | The site lives at `/<repo>/`, not the domain root. The workflow sets it; locally it is empty. |
-| `static/.nojekyll` | — | Stops Jekyll from discarding the `_app/` directory, whose name starts with an underscore. |
+| `prerender = true` | `src/routes/+layout.js` | Every route has to exist as HTML at build time. |
+| `paths.base` from `$BASE_PATH` | `vite.config.js` | The site lives at `/ChahalWedding/`, not the domain root. The `deploy` scripts set it; `npm run dev` leaves it empty. |
+| `static/.nojekyll` + `gh-pages -t true` | — | Jekyll discards directories starting with `_`, which would delete the whole `_app/` bundle. The `-t` flag makes sure the dotfile is published. |
 
 Because of `paths.base`, **every internal link and image path must go through
 `links` or `photos` in `src/lib/site.js`** (or `base` from `$app/paths`). A bare
 `href="/rsvp"` or `src="/images/x.jpg"` will 404 once deployed.
 
-To preview exactly what Pages serves, set the base for both commands —
-e.g. in PowerShell:
+To check what will be published before you publish it:
 
 ```bash
-$env:BASE_PATH='/ChahalWedding'; npm run build; npm run preview
+npm run predeploy
+npm run preview:deploy
 ```
 
 then open <http://localhost:4173/ChahalWedding/>.
+
+> If you ever rename the repository, update `/ChahalWedding` in the `predeploy`
+> and `preview:deploy` scripts in `package.json`.

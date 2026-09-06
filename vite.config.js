@@ -28,8 +28,9 @@ export default defineConfig({
 
 			paths: {
 				// GitHub Pages serves this repo from /ChahalWedding, not the domain
-				// root, so every internal link and asset needs that prefix. The
-				// deploy workflow sets BASE_PATH; locally it stays empty.
+				// root, so every internal link and asset needs that prefix baked in.
+				// `npm run deploy` and `npm run preview:deploy` set BASE_PATH; plain
+				// `npm run dev` leaves it empty so local work stays at the root.
 				base: /** @type {'' | `/${string}`} */ (process.env.BASE_PATH ?? '')
 			}
 		})
