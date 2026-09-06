@@ -1,7 +1,7 @@
 <script>
 	import { reveal } from '$lib/actions/reveal.js';
 	import { ArrowRight } from '@lucide/svelte';
-	import { rsvp, wedding, location } from '$lib/site.js';
+	import { rsvp, wedding, location, links } from '$lib/site.js';
 	import Photo from './Photo.svelte';
 </script>
 
@@ -57,7 +57,7 @@
 					answer helps us plan the day around the people in it.
 				</p>
 
-				<a href="/rsvp" class="btn-wine mt-10">
+				<a href={links.rsvp} class="btn-wine mt-10">
 					Yes — I'll be attending
 					<ArrowRight size={15} strokeWidth={1.8} />
 				</a>

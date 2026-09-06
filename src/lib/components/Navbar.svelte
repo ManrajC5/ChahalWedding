@@ -1,6 +1,6 @@
 <script>
 	import { Menu, X } from '@lucide/svelte';
-	import { nav, couple } from '$lib/site.js';
+	import { nav, couple, links } from '$lib/site.js';
 
 	// `solid` forces the opaque treatment for pages that don't open on the dark
 	// hero (e.g. /rsvp), where ivory-on-transparent would be invisible.
@@ -37,7 +37,7 @@
 		class="mx-auto flex max-w-editorial items-center justify-between px-6 py-5 md:px-10"
 	>
 		<a
-			href="/#home"
+			href={links.home}
 			class="font-serif text-xl tracking-wide2 transition-colors duration-500
 				{solid || scrolled || open ? 'text-wine' : 'text-white'}"
 		>

@@ -1,7 +1,9 @@
 <script>
 	// Image with a graceful fallback: if the real photo file is missing (404),
 	// it swaps to an on-palette placeholder so the layout never shows a broken icon.
-	let { src, fallback = '/images/placeholder.svg', alt = '', class: klass = '', ...rest } = $props();
+	import { photos } from '$lib/site.js';
+
+	let { src, fallback = photos.placeholder, alt = '', class: klass = '', ...rest } = $props();
 
 	let current = $state(src);
 

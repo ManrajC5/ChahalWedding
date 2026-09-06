@@ -1,5 +1,5 @@
 <script>
-	import { couple, wedding, location } from '$lib/site.js';
+	import { couple, wedding, location, photos } from '$lib/site.js';
 	import Photo from './Photo.svelte';
 </script>
 
@@ -13,8 +13,8 @@
 	     their faces in the upper third of the frame instead of cutting off their
 	     heads — and the copy below sits clear of them. -->
 	<Photo
-		src="/images/couple-bouquet.jpg"
-		fallback="/images/hero.svg"
+		src={photos.hero}
+		fallback={photos.heroFallback}
 		alt=""
 		aria-hidden="true"
 		fetchpriority="high"

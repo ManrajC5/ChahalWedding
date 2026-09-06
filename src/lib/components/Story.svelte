@@ -1,5 +1,6 @@
 <script>
 	import { reveal } from '$lib/actions/reveal.js';
+	import { photos } from '$lib/site.js';
 	import Photo from './Photo.svelte';
 </script>
 
@@ -9,7 +10,7 @@
 		<figure data-reveal use:reveal class="relative">
 			<div class="overflow-hidden">
 				<Photo
-					src="/images/ring-exchange.jpg"
+					src={photos.story}
 					alt="Harwant placing the engagement ring on Janelle’s hand"
 					loading="lazy"
 					class="aspect-[4/5] w-full object-cover transition-transform duration-[1.2s] ease-lux hover:scale-[1.03]"

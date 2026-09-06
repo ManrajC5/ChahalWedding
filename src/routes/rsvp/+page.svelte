@@ -2,7 +2,7 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import { Check, Mail, Loader2 } from '@lucide/svelte';
-	import { couple, wedding, location, rsvp } from '$lib/site.js';
+	import { couple, wedding, location, rsvp, links } from '$lib/site.js';
 
 	/**
 	 * Form state. Attendance defaults to "yes" because guests arrive here from
@@ -142,7 +142,7 @@
 					</div>
 				{/if}
 
-				<a href="/#home" class="btn-outline-forest mt-10">Back to the wedding</a>
+				<a href={links.home} class="btn-outline-forest mt-10">Back to the wedding</a>
 			</div>
 		{:else}
 			<form onsubmit={onSubmit} class="mt-14 space-y-8">

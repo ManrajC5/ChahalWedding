@@ -6,6 +6,36 @@
  * them. Image files live in /static/images/ and are served from /images/… — see
  * static/images/README.md for the manifest of which photo goes where.
  */
+import { base } from '$app/paths';
+
+/**
+ * Prefix a root-relative path with SvelteKit's deployment base. GitHub Pages
+ * serves this site from /ChahalWedding rather than the domain root, so a bare
+ * "/images/x.jpg" or "/rsvp" would 404 there. Locally `base` is an empty
+ * string, so nothing changes in dev.
+ * @param {string} path
+ */
+const p = (path) => `${base}${path}`;
+
+/** Internal destinations, used wherever a component needs to link somewhere. */
+export const links = {
+	home: p('/#home'),
+	story: p('/#story'),
+	gallery: p('/#gallery'),
+	location: p('/#location'),
+	rsvp: p('/rsvp')
+};
+
+/**
+ * Images that aren't attached to an editable content block below. Filenames are
+ * documented in static/images/README.md.
+ */
+export const photos = {
+	hero: p('/images/couple-bouquet.jpg'),
+	heroFallback: p('/images/hero.svg'),
+	story: p('/images/ring-exchange.jpg'),
+	placeholder: p('/images/placeholder.svg')
+};
 
 export const couple = {
 	first: 'Harwant',
@@ -26,11 +56,11 @@ export const wedding = {
 
 export const nav = [
 	// Root-relative so these still work from /rsvp, not just the home page.
-	{ label: 'Home', href: '/#home' },
-	{ label: 'Our Story', href: '/#story' },
-	{ label: 'Gallery', href: '/#gallery' },
-	{ label: 'Location', href: '/#location' },
-	{ label: 'RSVP', href: '/rsvp' }
+	{ label: 'Home', href: links.home },
+	{ label: 'Our Story', href: links.story },
+	{ label: 'Gallery', href: links.gallery },
+	{ label: 'Location', href: links.location },
+	{ label: 'RSVP', href: links.rsvp }
 ];
 
 /**
@@ -40,15 +70,15 @@ export const nav = [
  */
 export const gallery = [
 	{
-		src: '/images/couple-bouquet.jpg',
+		src: p('/images/couple-bouquet.jpg'),
 		alt: 'Harwant and Janelle seated together, smiling, Janelle holding a bouquet'
 	},
 	{
-		src: '/images/ring-exchange.jpg',
+		src: p('/images/ring-exchange.jpg'),
 		alt: 'Harwant placing the engagement ring on Janelle’s hand'
 	},
 	{
-		src: '/images/cake-feeding.png',
+		src: p('/images/cake-feeding.png'),
 		alt: 'Harwant and Janelle sharing a tender moment at the cake table'
 	}
 ];
@@ -98,7 +128,7 @@ export const location = {
 export const venue = {
 	name: '[Venue Name]',
 	address: '[Venue Address, Amritsar, Punjab]',
-	image: '/images/venue.jpg',
+	image: p('/images/venue.jpg'),
 	imageAlt: 'The wedding venue in Amritsar',
 	imageCaption: '[Add a photo of the venue here]',
 	// Replace with a description of the venue.
@@ -121,7 +151,7 @@ export const rsvp = {
 	formEndpoint: '',
 	email: '[your-email@example.com]',
 	deadline: '[RSVP by date]',
-	image: '/images/rsvp.jpg',
+	image: p('/images/rsvp.jpg'),
 	imageAlt: 'Harwant and Janelle',
 	imageCaption: '[Add a photo here]'
 };

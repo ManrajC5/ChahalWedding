@@ -10,8 +10,8 @@ separate `/rsvp` form page.
 ```bash
 npm install     # install dependencies
 npm run dev     # start the dev server (http://localhost:5173)
-npm run build   # production build
-npm run preview # preview the production build
+npm run build   # build the static site into /build
+npm run preview # serve /build locally
 ```
 
 ## Dependencies added
@@ -95,5 +95,34 @@ instead, paste a form-service URL (Formspree, Getform, Basin, a Google Form's
   `prefers-reduced-motion`.
 - The images are **elegant on-palette placeholders**, not stock wedding photos —
   swap in the couple's real photographs to go live.
-- `@sveltejs/adapter-auto` is the default; pick a specific
-  [adapter](https://svelte.dev/docs/kit/adapters) for your deploy target.
+## Deploying to GitHub Pages
+
+The site is fully prerendered by `@sveltejs/adapter-static` into `/build`, and
+`.github/workflows/deploy.yml` builds and publishes that on every push to
+`main`.
+
+**One-time setup in the repo:** Settings → Pages → *Build and deployment* →
+Source = **GitHub Actions**. With the older "Deploy from a branch" setting,
+Pages serves the repository as-is — and since there is no `index.html` at the
+root, it renders this README instead of the site.
+
+Three things make the static build work, and all three matter:
+
+| Piece | Where | Why |
+| ----- | ----- | --- |
+| `adapter-static` + `fallback: '404.html'` | `vite.config.js` | Pages only serves files; there is no Node server. The fallback also catches deep links. |
+| `paths.base` from `$BASE_PATH` | `vite.config.js` | The site lives at `/<repo>/`, not the domain root. The workflow sets it; locally it is empty. |
+| `static/.nojekyll` | — | Stops Jekyll from discarding the `_app/` directory, whose name starts with an underscore. |
+
+Because of `paths.base`, **every internal link and image path must go through
+`links` or `photos` in `src/lib/site.js`** (or `base` from `$app/paths`). A bare
+`href="/rsvp"` or `src="/images/x.jpg"` will 404 once deployed.
+
+To preview exactly what Pages serves, set the base for both commands —
+e.g. in PowerShell:
+
+```bash
+$env:BASE_PATH='/ChahalWedding'; npm run build; npm run preview
+```
+
+then open <http://localhost:4173/ChahalWedding/>.
